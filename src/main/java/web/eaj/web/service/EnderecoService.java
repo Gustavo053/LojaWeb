@@ -33,7 +33,11 @@ public class EnderecoService {
         repository.deleteById(id);
     }
 
-    public Optional<Endereco> findOne(Long id) {
+    public Endereco findOne(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public Optional<Endereco> findById(Long id) {
         return repository.findById(id);
     }
 

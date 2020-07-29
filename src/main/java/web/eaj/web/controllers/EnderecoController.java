@@ -1,6 +1,7 @@
 package web.eaj.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.eaj.web.models.Endereco;
 import web.eaj.web.service.EnderecoService;
@@ -21,11 +22,11 @@ public class EnderecoController {
 
     @GetMapping
     public List<Endereco> findAll() {
-        return  service.findAll();
+        return service.findAll();
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Endereco> findOne(@PathVariable Long id) {
+    public Endereco findOne(@PathVariable Long id) {
         return service.findOne(id);
     }
 
@@ -35,12 +36,24 @@ public class EnderecoController {
     }
 
     @PutMapping(path = "/{id}")
-    public Endereco update(@RequestBody Endereco e, @PathVariable Long id) {
-        e.setId(id);
-        return service.update(e);
+    public ResponseEntity<Endereco> update(@RequestBody Endereco e, @PathVariable Long id) {
+        if (service.findOne(id) == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            e.setId(id);
+            service.add(e);
+            Endereco updated = service.findOne(id);
+            return ResponseEntity.ok(updated);
+        }
     }
 
-    public void delete(@PathVariable Long id) {
-        service.deleteById(id);
+    @DeleteMapping
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        return service
+                .findById(id)
+                .map(record -> {
+                    service.delete(record);
+                    return ResponseEntity.status(202).build();
+                }).orElse(ResponseEntity.notFound().build());
     }
 }

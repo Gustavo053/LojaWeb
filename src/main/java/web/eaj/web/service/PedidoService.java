@@ -33,9 +33,11 @@ public class PedidoService {
         repository.deleteById(id);
     }
 
-    public Optional<Pedido> findOne(Long id) {
-        return repository.findById(id);
+    public Pedido findOne(Long id) {
+        return repository.findById(id).orElse(null);
     }
+
+    public Optional<Pedido> findById(Long id) { return repository.findById(id); }
 
     public List<Pedido> findAll() {
         return repository.findAll();

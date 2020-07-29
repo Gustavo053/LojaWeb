@@ -32,11 +32,11 @@ public class Pedido {
         this.produtos = produtos;
     }
 
-    public Long getIdPedido() {
+    public Long getId() {
         return id;
     }
 
-    public void setIdPedido(Long idPedido) {
+    public void setId(Long idPedido) {
         this.id = id;
     }
 

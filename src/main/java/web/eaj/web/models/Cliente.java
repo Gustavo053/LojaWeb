@@ -12,10 +12,6 @@ public class Cliente {
     String nome;
     String email;
 
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "pedidos_id")
-//    List<Pedido> pedidos;
-
     public Cliente() {
     }
 

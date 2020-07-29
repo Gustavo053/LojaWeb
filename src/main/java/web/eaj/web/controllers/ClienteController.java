@@ -1,6 +1,7 @@
 package web.eaj.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.eaj.web.models.Cliente;
 import web.eaj.web.service.ClienteService;
@@ -25,24 +26,34 @@ public class ClienteController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Cliente> findOne(@PathVariable Long id) {
+    public Cliente findOne(@PathVariable Long id) {
         return service.findOne(id);
     }
 
     @PostMapping
     public Cliente add(@RequestBody Cliente c) {
-        System.out.println(c);
         return service.add(c);
     }
 
     @PutMapping(path = "/{id}")
-    public Cliente update(@RequestBody Cliente c, @PathVariable Long id) {
-        c.setId(id);
-        return service.update(c);
+    public ResponseEntity<Cliente> update(@RequestBody Cliente c, @PathVariable Long id) {
+        if (service.findOne(id) == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            c.setId(id);
+            service.update(c);
+            Cliente updated = service.findOne(id);
+            return ResponseEntity.ok(updated);
+        }
     }
 
-    @DeleteMapping(path = "{/id}")
-    public void delete(@PathVariable Long id) {
-        service.deleteById(id);
+    @DeleteMapping
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        return service
+                .findById(id)
+                .map(record -> {
+                    service.delete(record);
+                    return ResponseEntity.status(202).build();
+                }).orElse(ResponseEntity.notFound().build());
     }
 }

@@ -1,6 +1,7 @@
 package web.eaj.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import web.eaj.web.models.Pedido;
 import web.eaj.web.service.PedidoService;
@@ -25,7 +26,7 @@ public class PedidoController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Pedido> findOne(@PathVariable Long id) {
+    public Pedido findOne(@PathVariable Long id) {
         return service.findOne(id);
     }
 
@@ -35,13 +36,23 @@ public class PedidoController {
     }
 
     @PutMapping(path = "/{id}")
-    public Pedido update(@RequestBody Pedido p, @PathVariable Long id) {
-        p.setIdPedido(id);
-        return service.update(p);
+    public ResponseEntity<Pedido> update(@RequestBody Pedido p, @PathVariable Long id) {
+        if (service.findOne(id) == null) {
+            return ResponseEntity.notFound().build();
+        } else {
+            p.setId(id);
+            Pedido updated = service.findOne(id);
+            return ResponseEntity.ok(updated);
+        }
     }
 
     @DeleteMapping(path = "/{id}")
-    public void delete(@PathVariable long id) {
-        service.deleteById(id);
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        return service
+                .findById(id)
+                .map(record -> {
+                    service.delete(record);
+                    return ResponseEntity.status(202).build();
+                }).orElse(ResponseEntity.notFound().build());
     }
 }

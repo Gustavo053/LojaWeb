@@ -1,5 +1,6 @@
 package web.eaj.web.service;
 
+import com.mysql.cj.xdevapi.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import web.eaj.web.models.Cliente;
@@ -31,9 +32,11 @@ public class ClienteService {
 
     public void deleteById(Long id) { repository.deleteById(id); }
 
-    public Optional<Cliente> findOne(Long id) {
-        return repository.findById(id);
+    public Cliente findOne(Long id) {
+        return repository.findById(id).orElse(null);
     }
+
+    public Optional<Cliente> findById(Long id) { return repository.findById(id); }
 
     public List<Cliente> findAll() {
         return repository.findAll();
