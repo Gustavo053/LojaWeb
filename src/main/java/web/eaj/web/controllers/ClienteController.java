@@ -47,7 +47,7 @@ public class ClienteController {
         }
     }
 
-    @DeleteMapping
+    @DeleteMapping(path = "/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         return service
                 .findById(id)

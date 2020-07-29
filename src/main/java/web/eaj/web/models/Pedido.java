@@ -25,10 +25,10 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, String data, Cliente cliente, List<Produto> produtos) {
+    public Pedido(Long id, String data, List<Cliente> clientes, List<Produto> produtos) {
         this.id = id;
         this.data = data;
-//        this.cliente = cliente;
+        this.clientes = clientes;
         this.produtos = produtos;
     }
 
@@ -48,13 +48,13 @@ public class Pedido {
         this.data = data;
     }
 
-//    public Cliente getCliente() {
-//        return cliente;
-//    }
-//
-//    public void setCliente(Cliente cliente) {
-//        this.cliente = cliente;
-//    }
+    public List<Cliente> getCliente() {
+        return clientes;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.clientes = clientes;
+    }
 
     public List<Produto> getProdutos() {
         return produtos;

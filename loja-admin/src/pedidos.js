@@ -2,22 +2,24 @@
 import * as React from "react";
 import { List, Datagrid, TextField, EmailField, ReferenceInput, SimpleForm, EditButton, Edit, TextInput, NumberInput, Create } from 'react-admin';
 
-export const EnderecoList = props => (
+export const PedidoList = props => (
     <List {...props}>
         <Datagrid rowClick="edit">
             <TextField source="id" />
-            <TextField source="bairro" />
-            <TextField label="Cliente" source="cliente.nome" />
-            <TextField label="Cliente" source="cliente.email" />
+            <TextField source="data" />
+            <TextField label="cliente" source="cliente.id" />
+            <TextField label="Produto" source="produtos.id" />
+            <TextField label="Nome do produto" source="produtos.nome" />
+            <TextField label="categoria" source="produtos.categoria" />
         </Datagrid>
     </List>
 );
 
-export const EnderecoEdit = props => (
+export const PedidoEdit = props => (
     <Edit {...props}>
         <SimpleForm>
             <TextInput disable source="id" />
-            <TextInput source="bairro"/>
+            <TextInput source="data"/>
             <ReferenceInput label="Cliente" source="cliente.nome" />
             <ReferenceInput label="Cliente" source="cliente.email" />
         </SimpleForm>

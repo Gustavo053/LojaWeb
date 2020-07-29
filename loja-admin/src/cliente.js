@@ -1,6 +1,6 @@
 // in src/enderecos
 import * as React from "react";
-import { List, Datagrid, TextField, EmailField, SimpleForm, EditButton, Edit, TextInput, NumberInput, Create } from 'react-admin';
+import { List, Datagrid, TextField, EmailField, SimpleForm, EditButton, ReferenceInput, Edit, TextInput, NumberInput, Create } from 'react-admin';
 
 export const ClienteList = props => (
     <List {...props}>
@@ -17,7 +17,7 @@ export const ClienteEdit = props => (
         <SimpleForm>
             <TextInput disable source="id" />
             <TextInput source="nome"/>
-            <EmailField source="email" />
+            <TextInput source="email" />
         </SimpleForm>
     </Edit>
 );
