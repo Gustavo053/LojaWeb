@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/endereco")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "X-Total-Count")
 public class EnderecoController {
     EnderecoService service;
 
@@ -29,12 +30,12 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public Endereco add(Endereco e) {
+    public Endereco add(@RequestBody Endereco e) {
         return service.add(e);
     }
 
     @PutMapping(path = "/{id}")
-    public Endereco update(Endereco e, @PathVariable Long id) {
+    public Endereco update(@RequestBody Endereco e, @PathVariable Long id) {
         e.setId(id);
         return service.update(e);
     }

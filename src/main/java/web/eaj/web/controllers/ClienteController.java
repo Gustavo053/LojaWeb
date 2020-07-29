@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cliente")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "X-Total-Count")
 public class ClienteController {
     ClienteService service;
 
@@ -30,6 +31,7 @@ public class ClienteController {
 
     @PostMapping
     public Cliente add(@RequestBody Cliente c) {
+        System.out.println(c);
         return service.add(c);
     }
 

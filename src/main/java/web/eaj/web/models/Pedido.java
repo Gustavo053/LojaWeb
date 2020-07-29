@@ -7,17 +7,17 @@ import java.util.List;
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long idPedido;
+    Long id;
     String data;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "cliente_id")
-    Cliente cliente;
+    List<Cliente> clientes;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "pedido_produto",
-            joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "idPedido"),
+            joinColumns = @JoinColumn(name = "pedido_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
     List<Produto> produtos;
@@ -25,19 +25,19 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long idPedido, String data, Cliente cliente, List<Produto> produtos) {
-        this.idPedido = idPedido;
+    public Pedido(Long id, String data, Cliente cliente, List<Produto> produtos) {
+        this.id = id;
         this.data = data;
-        this.cliente = cliente;
+//        this.cliente = cliente;
         this.produtos = produtos;
     }
 
     public Long getIdPedido() {
-        return idPedido;
+        return id;
     }
 
     public void setIdPedido(Long idPedido) {
-        this.idPedido = idPedido;
+        this.id = id;
     }
 
     public String getData() {
@@ -48,13 +48,13 @@ public class Pedido {
         this.data = data;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+//    public Cliente getCliente() {
+//        return cliente;
+//    }
+//
+//    public void setCliente(Cliente cliente) {
+//        this.cliente = cliente;
+//    }
 
     public List<Produto> getProdutos() {
         return produtos;

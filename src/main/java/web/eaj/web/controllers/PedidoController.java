@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/pedido")
+@CrossOrigin(origins = "http://localhost:3000", exposedHeaders = "X-Total-Count")
 public class PedidoController {
     PedidoService service;
 
@@ -29,12 +30,12 @@ public class PedidoController {
     }
 
     @PostMapping
-    public Pedido add(Pedido p) {
+    public Pedido add(@RequestBody Pedido p) {
         return service.add(p);
     }
 
     @PutMapping(path = "/{id}")
-    public Pedido update(Pedido p, @PathVariable Long id) {
+    public Pedido update(@RequestBody Pedido p, @PathVariable Long id) {
         p.setIdPedido(id);
         return service.update(p);
     }

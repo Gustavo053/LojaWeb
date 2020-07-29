@@ -6,11 +6,12 @@ import java.util.Objects;
 @Entity
 public class Endereco {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String bairro;
 
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @MapsId
     @JoinColumn(name = "cliente_id")
     Cliente cliente;
 
